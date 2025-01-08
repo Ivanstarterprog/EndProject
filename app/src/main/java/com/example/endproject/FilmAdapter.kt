@@ -9,13 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-interface ICellClickListener{
-    fun onCellClickListener(film: Film)
-}
-
-class FilmAdapter(private val context: Context,
-                  private val films: ArrayList<FilmsList>,
-                  private val listener: ICellClickListener) : RecyclerView.Adapter<FilmAdapter.FilmViewHolder>() {
+class FilmAdapter(private val films: FilmsList,
+                  private val onItemClick: (Film) -> Unit) : RecyclerView.Adapter<FilmAdapter.FilmViewHolder>() {
 
     class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val filmPoster = itemView.findViewById<ImageView>(R.id.showIcon)
@@ -30,16 +25,16 @@ class FilmAdapter(private val context: Context,
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
-        val film = films[0].films[position]
+        val film = films.films[position]
         holder.filmName.text = film.nameRu
         holder.filmInformation.text = "%s, %d".format(film.countries[0].country, film.year)
         holder.filmRatings.setText("Кинопоиск: %.2f, Imdb: %.2f".format(film.ratingKinopoisk, film.ratingImdb))
         holder.itemView.setOnClickListener {
-            listener.onCellClickListener(film)
+            onItemClick(film)
         }
         Glide.with(holder.itemView.context).load(film.posterUrl).into(holder.filmPoster)
     }
 
-    override fun getItemCount(): Int = films.size
+    override fun getItemCount(): Int = films.numberOfFilms
 
 }

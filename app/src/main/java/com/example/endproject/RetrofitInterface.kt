@@ -6,12 +6,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
+import retrofit2.http.Path
 
 
 interface KinopoiskApiService {
-    @Headers("X-API-KEY: your_api_key") // Замените на ваш API-ключ
-    @GET("v2.2/films/top")
-    fun getTopFilms(@Query("type") type: String, @Query("page") page: Int): Call<FilmsList>
+    @Headers("X-API-KEY: 5fe0e1e8-f301-4e84-a058-b6693498a697")
+    @GET("v2.2/films")
+    fun getAllFilms() : Call<FilmsList>
 }
 
 object RetrofitClient {
