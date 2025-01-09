@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
+
 class FilmAdapter(private val films: FilmsList,
                   private val onItemClick: (Film) -> Unit) : RecyclerView.Adapter<FilmAdapter.FilmViewHolder>() {
 
@@ -25,8 +26,16 @@ class FilmAdapter(private val films: FilmsList,
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
-        val film = films.films[position]
-        holder.filmName.text = film.nameRu
+        val film = films.items[position]
+        if (film.nameRu != null){
+            holder.filmName.text = film.nameRu
+        }
+        else if (film.nameEn != null){
+            holder.filmName.text = film.nameEn
+        }
+        else{
+            holder.filmName.text = film.nameOriginal
+        }
         holder.filmInformation.text = "%s, %d".format(film.countries[0].country, film.year)
         holder.filmRatings.setText("Кинопоиск: %.2f, Imdb: %.2f".format(film.ratingKinopoisk, film.ratingImdb))
         holder.itemView.setOnClickListener {
@@ -35,6 +44,6 @@ class FilmAdapter(private val films: FilmsList,
         Glide.with(holder.itemView.context).load(film.posterUrl).into(holder.filmPoster)
     }
 
-    override fun getItemCount(): Int = films.numberOfFilms
+    override fun getItemCount(): Int = films.total
 
 }

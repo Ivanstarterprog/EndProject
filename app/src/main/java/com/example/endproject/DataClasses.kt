@@ -26,7 +26,7 @@ data class Film(
 )
 
 data class FilmsList(
-    val numberOfFilms: Int,
+    val total: Int,
     val totalPages: Int,
-    val films: ArrayList<Film>
+    val items: ArrayList<Film>
 )
